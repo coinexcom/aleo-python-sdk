@@ -62,5 +62,3 @@ pub use transition::Transition;
 mod value;
 pub use value::Value;
 
-mod verifying_key;
-pub use verifying_key::VerifyingKey;

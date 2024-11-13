@@ -21,7 +21,7 @@ serde = "1"
 serde_json = "1"
 
 [dependencies.snarkvm]
-git = "https://github.com/AleoHQ/snarkVM.git"
-rev = "01c8b09"
-#version = "=0.16.18"
+git = "https://github.com/ProvableHQ/snarkVM"
+rev = "460f637"
+#version = "=1.0.0"
 features = [ "console" ]

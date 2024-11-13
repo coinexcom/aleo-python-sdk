@@ -16,9 +16,6 @@
 
 use snarkvm::circuit::network::AleoV0;
 use snarkvm::console::network::MainnetV0;
-use snarkvm::prelude::coinbase::{
-    CoinbasePuzzle, CoinbaseVerifyingKey, EpochChallenge, ProverSolution,
-};
 use snarkvm::prelude::query::Query;
 use snarkvm::prelude::store::helpers::memory::BlockMemory;
 use snarkvm::prelude::transaction::Transaction;
@@ -85,8 +82,3 @@ pub type PlaintextNative = Plaintext<CurrentNetwork>;
 pub type RecordCiphertextNative = Record<CurrentNetwork, CiphertextNative>;
 pub type RecordPlaintextNative = Record<CurrentNetwork, PlaintextNative>;
 
-// Coinbase types
-pub type CoinbasePuzzleNative = CoinbasePuzzle<CurrentNetwork>;
-pub type CoinbaseVerifyingKeyNative = CoinbaseVerifyingKey<CurrentNetwork>;
-pub type EpochChallengeNative = EpochChallenge<CurrentNetwork>;
-pub type ProverSolutionNative = ProverSolution<CurrentNetwork>;

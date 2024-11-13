@@ -17,7 +17,7 @@
 use crate::{
     types::{CurrentAleo, ProcessNative},
     Authorization, Execution, Fee, Field, Identifier, MicroCredits, PrivateKey, Program, ProgramID,
-    ProvingKey, RecordPlaintext, Response, Trace, Value, VerifyingKey,
+    ProvingKey, RecordPlaintext, Response, Trace, Value,
 };
 
 use pyo3::prelude::*;
@@ -66,28 +66,6 @@ impl Process {
     ) -> anyhow::Result<()> {
         self.0
             .insert_proving_key(program_id, function_name, proving_key.into())
-    }
-
-    /// Returns the verifying key for the given program ID and function name.
-    fn get_verifying_key(
-        &self,
-        program_id: ProgramID,
-        function_name: Identifier,
-    ) -> anyhow::Result<VerifyingKey> {
-        self.0
-            .get_verifying_key(program_id, function_name)
-            .map(Into::into)
-    }
-
-    /// Inserts the given verifying key, for the given program ID and function name.
-    fn insert_verifying_key(
-        &mut self,
-        program_id: &ProgramID,
-        function_name: &Identifier,
-        verifying_key: VerifyingKey,
-    ) -> anyhow::Result<()> {
-        self.0
-            .insert_verifying_key(program_id, function_name, verifying_key.into())
     }
 
     /// Authorizes a call to the program function for the given inputs.

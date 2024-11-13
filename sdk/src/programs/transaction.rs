@@ -19,7 +19,6 @@ use crate::{
     types::{
         DeploymentNative,
         TransactionNative,
-        VerifyingKeyNative,
     }
 };
 
@@ -60,31 +59,6 @@ impl Transaction {
     /// Returns the byte representation of a Transaction.
     fn bytes(&self) -> anyhow::Result<Vec<u8>> {
         self.0.to_bytes_le()
-    }
-
-    #[staticmethod]
-    fn underreport_constraints(transaction: Transaction, num_constraints: usize) -> Transaction {
-        // Destructure the deployment transaction.
-        let transaction_native = TransactionNative::from(transaction);
-        let TransactionNative::Deploy(txid, program_owner, deployment, fee) = transaction_native else {
-            panic!("Expected a deployment transaction");
-        };
-
-        // Decrease the number of constraints in the verifying keys.
-        let mut vks_with_underreport = Vec::with_capacity(deployment.verifying_keys().len());
-        for (id, (vk, cert)) in deployment.verifying_keys() {
-            let mut vk = vk.deref().clone();
-            vk.circuit_info.num_constraints -= 2;
-            let vk = VerifyingKeyNative::new(Arc::new(vk));
-            vks_with_underreport.push((*id, (vk, cert.clone())));
-        }
-
-        // Create a new deployment transaction with the underreported verifying keys.
-        let adjusted_deployment =
-            DeploymentNative::new(deployment.edition(), deployment.program().clone(), vks_with_underreport).unwrap();
-        let adjusted_transaction = TransactionNative::Deploy(txid, program_owner, Box::new(adjusted_deployment), fee);
-
-        Transaction(adjusted_transaction)
     }
 
     /// Returns the Transaction as a JSON string.
