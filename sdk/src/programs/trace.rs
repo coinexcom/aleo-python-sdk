@@ -21,6 +21,7 @@ use crate::{
 
 use pyo3::prelude::*;
 use rand::{rngs::StdRng, SeedableRng};
+use snarkvm::algorithms::snark::varuna::VarunaVersion;
 
 /// The Aleo trace type.
 #[pyclass]
@@ -58,14 +59,14 @@ impl Trace {
         let locator: LocatorNative = locator.into();
         let locator_s = locator.to_string();
         self.0
-            .prove_execution::<CurrentAleo, _>(&locator_s, &mut StdRng::from_entropy())
+            .prove_execution::<CurrentAleo, _>(&locator_s, VarunaVersion::V2, &mut StdRng::from_entropy())
             .map(Into::into)
     }
 
     /// Returns a new fee with a proof, for the current inclusion assignment and global state root.
     fn prove_fee(&self) -> anyhow::Result<Fee> {
         self.0
-            .prove_fee::<CurrentAleo, _>(&mut StdRng::from_entropy())
+            .prove_fee::<CurrentAleo, _>(VarunaVersion::V2, &mut StdRng::from_entropy())
             .map(Into::into)
     }
 

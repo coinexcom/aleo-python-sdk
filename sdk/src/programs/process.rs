@@ -22,7 +22,7 @@ use crate::{
 
 use pyo3::prelude::*;
 use rand::{rngs::StdRng, SeedableRng};
-use snarkvm::prelude::cost_in_microcredits;
+use snarkvm::algorithms::snark::varuna::VarunaVersion;
 
 /// The Aleo process type.
 #[pyclass]
@@ -136,12 +136,12 @@ impl Process {
 
     /// Verifies the given execution is valid. Note: This does not check that the global state root exists in the ledger.
     fn verify_execution(&self, execution: &Execution) -> anyhow::Result<()> {
-        self.0.verify_execution(execution)
+        self.0.verify_execution(VarunaVersion::V2, execution)
     }
 
     /// Verifies the given fee is valid. Note: This does not check that the global state root exists in the ledger.
     fn verify_fee(&self, fee: &Fee, deployment_or_execution_id: Field) -> anyhow::Result<()> {
-        self.0.verify_fee(fee, deployment_or_execution_id.into())
+        self.0.verify_fee(VarunaVersion::V2, fee, deployment_or_execution_id.into())
     }
 
 }
