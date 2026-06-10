@@ -14,10 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with the Aleo SDK library. If not, see <https://www.gnu.org/licenses/>.
 
-use crate::{types::SignatureNative, Address, ComputeKey, PrivateKey, Scalar};
+use crate::{types::SignatureNative, util::os_rng, Address, ComputeKey, PrivateKey, Scalar};
 
 use pyo3::prelude::*;
-use rand::{rngs::StdRng, SeedableRng};
 
 use std::{
     collections::hash_map::DefaultHasher,
@@ -58,7 +57,7 @@ impl Signature {
     #[staticmethod]
     pub fn sign(private_key: &PrivateKey, message: &[u8]) -> anyhow::Result<Self> {
         private_key
-            .sign_bytes(message, &mut StdRng::from_entropy())
+            .sign_bytes(message, &mut os_rng())
             .map(Self)
     }
 

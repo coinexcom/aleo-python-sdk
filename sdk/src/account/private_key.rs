@@ -19,8 +19,9 @@ use crate::{
     Address, ComputeKey, Field, Scalar, Signature, ViewKey,
 };
 
+use crate::util::os_rng;
+
 use pyo3::prelude::*;
-use rand::{rngs::StdRng, SeedableRng};
 
 use std::{
     collections::hash_map::DefaultHasher,
@@ -40,7 +41,7 @@ impl PrivateKey {
     #[allow(clippy::new_without_default)]
     #[new]
     pub fn new() -> Self {
-        PrivateKeyNative::new(&mut StdRng::from_entropy())
+        PrivateKeyNative::new(&mut os_rng())
             .unwrap()
             .into()
     }

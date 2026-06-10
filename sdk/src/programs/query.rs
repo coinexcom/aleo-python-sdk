@@ -17,6 +17,7 @@
 use crate::types::QueryNative;
 
 use pyo3::prelude::*;
+use std::str::FromStr;
 
 /// The Aleo query type.
 #[pyclass]
@@ -27,8 +28,10 @@ pub struct Query(QueryNative);
 impl Query {
     /// The base URL of the node.
     #[staticmethod]
-    fn rest(url: String) -> Self {
-        QueryNative::REST(url).into()
+    fn rest(url: String) -> PyResult<Self> {
+        QueryNative::from_str(url.as_str())
+            .map(Self)
+            .map_err(|e| pyo3::exceptions::PyValueError::new_err(e.to_string()))
     }
 
     #[classattr]

@@ -15,7 +15,7 @@
 // along with the Aleo SDK library. If not, see <https://www.gnu.org/licenses/>.
 
 use crate::{
-    types::{RecordCiphertextNative, RecordPlaintextNative},
+    types::{RecordCiphertextNative, RecordPlaintextNative, ViewKeyNative},
     Field, Group, Identifier, PrivateKey, ProgramID, ViewKey,
 };
 use std::ops::Deref;
@@ -96,7 +96,11 @@ impl RecordPlaintext {
         program_id: &ProgramID,
         record_identifier: &Identifier,
     ) -> anyhow::Result<Field> {
-        let commitment = self.to_commitment(program_id, record_identifier)?;
+        let view_key = ViewKeyNative::try_from(**private_key)?;
+        let record_view_key = (*self.0.nonce() * *view_key).to_x_coordinate();
+        let commitment = self
+            .0
+            .to_commitment(program_id, record_identifier, &record_view_key)?;
         RecordPlaintextNative::serial_number(**private_key, commitment).map(Into::into)
     }
 

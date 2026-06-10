@@ -19,14 +19,13 @@ use pyo3::prelude::*;
 mod account;
 mod algebra;
 mod credits;
-mod network;
 mod programs;
 mod types;
+mod util;
 
 use account::*;
 use algebra::*;
 use credits::*;
-use network::*;
 use programs::*;
 
 /// The Aleo Python SDK provides a set of libraries aimed at empowering
@@ -35,48 +34,24 @@ use programs::*;
 #[pymodule]
 #[pyo3(name = "_aleolib")]
 fn register_module(_py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_class::<Account>()?;
     m.add_class::<Address>()?;
     m.add_class::<Authorization>()?;
-    m.add_class::<Boolean>()?;
-    m.add_class::<Ciphertext>()?;
-    m.add_class::<ComputeKey>()?;
     m.add_class::<Credits>()?;
     m.add_class::<Execution>()?;
     m.add_class::<Fee>()?;
-    m.add_class::<Field>()?;
-    m.add_class::<Group>()?;
     m.add_class::<Identifier>()?;
-    m.add_class::<I8>()?;
-    m.add_class::<I16>()?;
-    m.add_class::<I32>()?;
-    m.add_class::<I64>()?;
-    m.add_class::<I128>()?;
     m.add_class::<Literal>()?;
     m.add_class::<Locator>()?;
     m.add_class::<MicroCredits>()?;
-    m.add_class::<Network>()?;
-    m.add_class::<Plaintext>()?;
     m.add_class::<PrivateKey>()?;
     m.add_class::<Process>()?;
     m.add_class::<Program>()?;
     m.add_class::<ProgramID>()?;
-    m.add_class::<ProvingKey>()?;
     m.add_class::<Query>()?;
-    m.add_class::<RecordCiphertext>()?;
-    m.add_class::<RecordPlaintext>()?;
     m.add_class::<Response>()?;
-    m.add_class::<Scalar>()?;
-    m.add_class::<Signature>()?;
     m.add_class::<Trace>()?;
     m.add_class::<Transaction>()?;
-    m.add_class::<Transition>()?;
-    m.add_class::<U8>()?;
-    m.add_class::<U16>()?;
-    m.add_class::<U32>()?;
     m.add_class::<U64>()?;
-    m.add_class::<U128>()?;
     m.add_class::<Value>()?;
-    m.add_class::<ViewKey>()?;
     Ok(())
 }

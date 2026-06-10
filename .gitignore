@@ -1,9 +1,29 @@
+# IDE
+.idea/
 .vscode/
-sandbox/
-myenv/
-tmp/
-.history/
+*.iml
 
+# OS
 .DS_Store
 
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+.env/
+.venv/
+venv/
+myenv/
+*.egg-info/
+dist/
+build/
+
+# Rust
+target/
+
+# Local / temp
+sandbox/
+tmp/
+.history/
 *.pkl
